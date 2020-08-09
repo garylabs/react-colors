@@ -86,7 +86,7 @@ const styles = {
 		lineHeight: '30px',
 		textTransform: 'uppercase',
 		border: 'none',
-		textecoration: 'none',
+		textDecoration: 'none',
 		opacity: '0',
 	},
 	copyMsg: {
