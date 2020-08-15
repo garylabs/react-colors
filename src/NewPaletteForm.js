@@ -119,6 +119,17 @@ export class NewPaletteForm extends Component {
 		this.setState({ newName: evt.target.value });
 	};
 
+	handleSubmit = () => {
+		let newName = 'New Test Palette';
+		const newPalette = {
+			paletteName: newName,
+			id: newName.toLowerCase().replace(/ /g, '-'),
+			colors: this.state.colors,
+		};
+		this.props.savePalette(newPalette);
+		this.props.history.push('/');
+	};
+
 	render() {
 		const { classes, theme } = this.props;
 		const { open } = this.state;
@@ -142,6 +153,12 @@ export class NewPaletteForm extends Component {
 						<Typography variant="h6" color="inherit" noWrap>
 							Persistent drawer
 						</Typography>
+						<Button
+							variant="contained"
+							color="primary"
+							onClick={this.handleSubmit}>
+							Save Palette
+						</Button>
 					</Toolbar>
 				</AppBar>
 				<Drawer
