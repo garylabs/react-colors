@@ -1,6 +1,15 @@
 import sizes from './sizes';
 import bg from './bgsvg.svg';
 export default {
+	'@global': {
+		'.fade-exit': {
+			opacity: 1,
+		},
+		'.fade-exit-active': {
+			opacity: 0,
+			transition: 'opacity .5s ease-out',
+		},
+	},
 	root: {
 		height: '100vh',
 		display: 'flex',
@@ -53,6 +62,6 @@ export default {
 		},
 	},
 	heading: {
-		fontSize: '2rem',
+		fontSize: '2rem ',
 	},
 };
