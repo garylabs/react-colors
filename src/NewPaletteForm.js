@@ -29,9 +29,12 @@ const styles = theme => ({
 	drawer: {
 		width: drawerWidth,
 		flexShrink: 0,
+		height: '100vh',
 	},
 	drawerPaper: {
+		display: 'flex',
 		width: drawerWidth,
+		alignItems: 'center',
 	},
 	drawerHeader: {
 		display: 'flex',
@@ -56,6 +59,20 @@ const styles = theme => ({
 			duration: theme.transitions.duration.enteringScreen,
 		}),
 		marginLeft: 0,
+	},
+	container: {
+		width: '90%',
+		height: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	btns: {
+		width: '100%',
+	},
+	btn: {
+		width: '50%',
 	},
 });
 
@@ -153,27 +170,33 @@ export class NewPaletteForm extends Component {
 						</IconButton>
 					</div>
 					<Divider />
-					<Typography variant="h4">Design Your Palette</Typography>
-					<div>
-						<Button
-							variant="contained"
-							color="secondary"
-							onClick={this.clearColors}>
-							Clear Palette
-						</Button>
-						<Button
-							variant="contained"
-							color="primary"
-							onClick={this.addRandomColor}
-							disabled={isPaletteFull}>
-							Random Color
-						</Button>
+					<div className={classes.container}>
+						<Typography variant="h4" gutterBottom>
+							Design Your Palette
+						</Typography>
+						<div className={classes.btns}>
+							<Button
+								variant="contained"
+								color="secondary"
+								className={classes.btn}
+								onClick={this.clearColors}>
+								Clear Palette
+							</Button>
+							<Button
+								variant="contained"
+								color="primary"
+								className={classes.btn}
+								onClick={this.addRandomColor}
+								disabled={isPaletteFull}>
+								Random Color
+							</Button>
+							<ColorPickerForm
+								isPaletteFull={isPaletteFull}
+								createColor={this.createColor}
+								colors={colors}
+							/>
+						</div>
 					</div>
-					<ColorPickerForm
-						isPaletteFull={isPaletteFull}
-						createColor={this.createColor}
-						colors={colors}
-					/>
 				</Drawer>
 				<main
 					className={classNames(classes.content, {
