@@ -15,7 +15,7 @@ export class PaletteMetaForm extends Component {
 		super(props);
 
 		this.state = {
-			open: true,
+			stage: 'form',
 			newPaletteName: '',
 		};
 	}
@@ -32,6 +32,18 @@ export class PaletteMetaForm extends Component {
 		this.setState({ [evt.target.name]: evt.target.value });
 	};
 
+	showEmojiPicker = () => {
+		this.setState({ stage: 'emoji' });
+	};
+
+	savePalette = emoji => {
+		const newPalette = {
+			paletteName: this.state.newPaletteName,
+			emoji: emoji.native,
+		};
+		this.props.handleSubmit(newPalette);
+	};
+
 	componentDidMount() {
 		ValidatorForm.addValidationRule('isPaletteNameUnique', value =>
 			this.props.palettes.every(
@@ -45,19 +57,24 @@ export class PaletteMetaForm extends Component {
 		const { handleSubmit, hideForm } = this.props;
 		return (
 			<div>
+				<Dialog open={this.state.stage === 'emoji'} onClose={hideForm}>
+					<DialogTitle id="form-dialog-title">
+						Choose a Palette Emoji
+					</DialogTitle>
+					<Picker onSelect={this.savePalette} title="Choose a Palette Emoji" />
+				</Dialog>
 				<Dialog
-					open={this.state.open}
+					open={this.state.stage === 'form'}
 					onClose={hideForm}
 					aria-labelledby="form-dialog-title">
 					<DialogTitle id="form-dialog-title">
 						Choose a Palette Name
 					</DialogTitle>
-					<ValidatorForm onSubmit={() => handleSubmit(newPaletteName)}>
+					<ValidatorForm onSubmit={this.showEmojiPicker}>
 						<DialogContent>
 							<DialogContentText>
 								Please enter a name for your new palette. Make sure it is unique
 							</DialogContentText>
-							<Picker />
 							<TextValidator
 								label="Palette Name"
 								value={newPaletteName}
