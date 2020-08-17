@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import DragableColorbox from './DragableColorbox';
 import { SortableContainer } from 'react-sortable-hoc';
 

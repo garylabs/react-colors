@@ -39,7 +39,6 @@ export default {
 		display: 'flex',
 		width: '100%',
 		justifyContent: 'space-between',
-		color: 'white',
 		alignItems: 'center',
 		color: 'white',
 		'& a': {

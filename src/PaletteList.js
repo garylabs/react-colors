@@ -12,9 +12,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
@@ -41,13 +38,17 @@ class PaletteList extends Component {
 		this.closeDialog();
 	};
 
+	handleClick() {
+		this.props.goToPalette(this.props.id);
+	}
+
 	gotToPalette(id) {
 		this.props.history.push(`/palette/${id}`);
 	}
 
 	render() {
-		const { palettes, classes, deletePalette } = this.props;
-		const { openDelDiag, deletingId } = this.state;
+		const { palettes, classes } = this.props;
+		const { openDelDiag } = this.state;
 		return (
 			<div className={classes.root}>
 				<div className={classes.container}>
@@ -61,7 +62,7 @@ class PaletteList extends Component {
 								<MiniPalette
 									{...palette}
 									openDialog={this.openDialog}
-									handleClick={() => this.gotToPalette(palette.id)}
+									goToPalette={this.gotToPalette}
 									key={palette.id}
 									id={palette.id}
 								/>

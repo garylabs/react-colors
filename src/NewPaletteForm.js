@@ -3,7 +3,7 @@ import PaletteFormNav from './PaletteFormNav';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-
+import seedColors from './seedColors';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -27,7 +27,7 @@ export class NewPaletteForm extends Component {
 		this.state = {
 			open: true,
 			currColor: 'teal',
-			colors: this.props.palettes[0].colors,
+			colors: seedColors[0].colors,
 		};
 	}
 
@@ -72,8 +72,16 @@ export class NewPaletteForm extends Component {
 	addRandomColor = () => {
 		//random color from existing palettes
 		const allColors = this.props.palettes.map(p => p.colors).flat();
-		let rand = Math.floor(Math.random() * allColors.length);
-		const randomColor = allColors[rand];
+		let rand;
+		let randomColor;
+		let isDuplicateColor = true;
+		while (isDuplicateColor) {
+			rand = Math.floor(Math.random() * allColors.length);
+			randomColor = allColors[rand];
+			isDuplicateColor = this.state.colors.some(
+				color => color.name === randomColor.name
+			);
+		}
 		this.setState(
 			{ colors: [...this.state.colors, randomColor] },
 			console.log(this.state.colors)
@@ -81,7 +89,7 @@ export class NewPaletteForm extends Component {
 	};
 
 	render() {
-		const { classes, theme, maxColors, palettes } = this.props;
+		const { classes, maxColors, palettes } = this.props;
 		const { open, colors } = this.state;
 		let isPaletteFull = colors.length >= maxColors;
 
@@ -145,6 +153,7 @@ export class NewPaletteForm extends Component {
 						removeColor={this.removeColor}
 						axis="xy"
 						onSortEnd={this.onSortEnd}
+						distance={10}
 					/>
 				</main>
 			</div>
@@ -152,4 +161,4 @@ export class NewPaletteForm extends Component {
 	}
 }
 
-export default withStyles(styles, { withTheme: true })(NewPaletteForm);
+export default withStyles(styles)(NewPaletteForm);
